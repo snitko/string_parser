@@ -91,15 +91,6 @@ class StringParser
     end
 
     # TODO: split string longer than 80 characters
-    #
-    #result = text.split("\n").map do |line|
-    #  if line.length > 80
-    #    line.gsub(/(.{1,80})(.*?)/, "\\1\n\\2")
-    #  else
-    #    line
-    #  end
-    #end
-    #result.join("\n")
 
     @modified_string = text
     self
