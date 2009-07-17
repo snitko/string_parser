@@ -68,9 +68,10 @@ class StringParser
 
   # Highlights code using 'uv' library.
   # Make sure you have ultraviolet gem installed.
-  def highlight_code
+  def highlight_code(options={})
     require 'uv'
 
+    wrap_with = options[:wrap_with] || ['','']
     text = @modified_string
 
     languages_syntax_list = File.readlines(
@@ -84,7 +85,8 @@ class StringParser
         lang = 'ruby'
       end
       unless $3.blank?
-        Uv.parse($3.gsub('<br/>', "\n").gsub('&lt;', '<').gsub('&gt;', '>').gsub('&quot;', '"'), 'xhtml', lang, false, 'active4d')
+        result = Uv.parse($3.gsub('<br/>', "\n").gsub('&lt;', '<').gsub('&gt;', '>').gsub('&quot;', '"'), 'xhtml', lang, false, 'active4d')
+        "#{wrap_with[0].gsub('$lang', lang)}#{result}#{wrap_with[1]}"
       end
     end
 
