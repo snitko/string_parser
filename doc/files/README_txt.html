@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Fri Jul 17 07:48:17 +0400 2009</td>
+      <td>Fri Jul 17 18:50:42 +0400 2009</td>
     </tr>
     </table>
   </div>
@@ -71,12 +71,15 @@
     <div id="description">
       <p>
 <a href="../classes/StringParser.html">StringParser</a> is a simple ruby
-library for the most common cases or parsing the string, like converting
-all urls to links and images, escaping tags and breaking too long words.
+library for the most common cases of string parsing, like converting all
+urls to links and images, escaping tags and breaking too long words.
 </p>
 <h2>USAGE</h2>
 <pre>
-  Block notation:
+  First, don't forget to require 'string_parser' wherever you're planning to use it,
+  because I removed require statement from init.rb.
+
+  Then, use block notation:
 
     parser = StringParser.new(&quot;&lt;b&gt;Hello, &lt;script&gt;&lt;/script&gt;&lt;i&gt;world!&lt;/b&gt;&quot;) do |p|
       p.close_tags.html_escape(:except =&gt; %w(b i))

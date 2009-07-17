@@ -11,9 +11,10 @@
 </head>
 <body class="standalone-code">
   <pre><span class="ruby-comment cmt"># File lib/string_parser.rb, line 71</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">highlight_code</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">highlight_code</span>(<span class="ruby-identifier">options</span>={})
     <span class="ruby-identifier">require</span> <span class="ruby-value str">'uv'</span>
 
+    <span class="ruby-identifier">wrap_with</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:wrap_with</span>] <span class="ruby-operator">||</span> [<span class="ruby-value str">''</span>,<span class="ruby-value str">''</span>]
     <span class="ruby-identifier">text</span> = <span class="ruby-ivar">@modified_string</span>
 
     <span class="ruby-identifier">languages_syntax_list</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">readlines</span>(
@@ -27,7 +28,8 @@
         <span class="ruby-identifier">lang</span> = <span class="ruby-value str">'ruby'</span>
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">blank?</span>
-        <span class="ruby-constant">Uv</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">$3</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&lt;br/&gt;'</span>, <span class="ruby-value str">&quot;\n&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&amp;lt;'</span>, <span class="ruby-value str">'&lt;'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&amp;gt;'</span>, <span class="ruby-value str">'&gt;'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&amp;quot;'</span>, <span class="ruby-value str">'&quot;'</span>), <span class="ruby-value str">'xhtml'</span>, <span class="ruby-identifier">lang</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-value str">'active4d'</span>)
+        <span class="ruby-identifier">result</span> = <span class="ruby-constant">Uv</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">$3</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&lt;br/&gt;'</span>, <span class="ruby-value str">&quot;\n&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&amp;lt;'</span>, <span class="ruby-value str">'&lt;'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&amp;gt;'</span>, <span class="ruby-value str">'&gt;'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&amp;quot;'</span>, <span class="ruby-value str">'&quot;'</span>), <span class="ruby-value str">'xhtml'</span>, <span class="ruby-identifier">lang</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-value str">'active4d'</span>)
+        <span class="ruby-node">&quot;#{wrap_with[0].gsub('$lang', lang)}#{result}#{wrap_with[1]}&quot;</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
 

@@ -1,9 +1,12 @@
-StringParser is a simple ruby library for the most common cases or parsing the string,
+StringParser is a simple ruby library for the most common cases of string parsing,
 like converting all urls to links and images, escaping tags and breaking too long words.
 
 == USAGE
 
-  Block notation:
+  First, don't forget to require 'string_parser' wherever you're planning to use it,
+  because I removed require statement from init.rb. 
+
+  Then, use block notation:
 
     parser = StringParser.new("<b>Hello, <script></script><i>world!</b>") do |p|
       p.close_tags.html_escape(:except => %w(b i))
