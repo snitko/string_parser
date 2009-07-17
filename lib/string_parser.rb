@@ -60,7 +60,7 @@ class StringParser
   def urls_to_links(options = {})
     wrap_with = options[:wrap_with] || ['','']
     @modified_string.gsub!(
-      /(\s|^|\A|\n|\t|\r)(http:\/\/.*?)([,.])?(\s|$|\n|\Z|\t|\r)/,
+      /(\s|^|\A|\n|\t|\r)(http:\/\/.*?)([,.])?(\s|$|\n|\Z|\t|\r|<)/,
       '\1<a href="\2">\2</a>\3\4'
     )
     self

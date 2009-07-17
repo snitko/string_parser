@@ -19,12 +19,19 @@ describe StringParser do
   end
 
   it "makes links of urls" do
+    # example 1
     parser = StringParser.new('Hello, this is my homepage http://url.com, yeah baby')
     parser.urls_to_links.string.should have_text(
       'Hello, this is my homepage <a href="http://url.com">http://url.com</a>, yeah baby')
+    
+    # example 2
     parser = StringParser.new("http://localhost:3000/\nhttp://localhost:3000/")
     parser.urls_to_links.string.should have_text(
       "<a href=\"http://localhost:3000/\">http://localhost:3000/</a>\n<a href=\"http://localhost:3000/\">http://localhost:3000/</a>")
+
+    # example 3
+    parser = StringParser.new('http://gyazo.com/a4c16e7a6009f40f29248ad4fed41bd3.png<br>')
+    parser.urls_to_links.string.should have_text('<a href="http://gyazo.com/a4c16e7a6009f40f29248ad4fed41bd3.png">http://gyazo.com/a4c16e7a6009f40f29248ad4fed41bd3.png</a><br>')
   end
 
   it "highlights code" do
