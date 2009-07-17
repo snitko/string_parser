@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>urls_to_images (StringParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/string_parser.rb, line 48</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">urls_to_images</span>(<span class="ruby-identifier">options</span> = {})
+    <span class="ruby-identifier">wrap_with</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:wrap_with</span>] <span class="ruby-operator">||</span> [<span class="ruby-value str">''</span>,<span class="ruby-value str">''</span>]
+    <span class="ruby-ivar">@modified_string</span>.<span class="ruby-identifier">gsub!</span>(
+      <span class="ruby-regexp re">/(\s|^|\A|\n|\t|\r)(http:\/\/.*?\.(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF))([,.])?(\s|$|\n|\Z|\t|\r)/</span>,
+      <span class="ruby-node">&quot;#{wrap_with[0]}&lt;img src=\&quot;\\2\&quot; alt=\&quot;\&quot;/&gt;\\5#{wrap_with[1]}&quot;</span>
+    )
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

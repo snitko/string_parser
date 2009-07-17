@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>highlight_code (StringParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/string_parser.rb, line 71</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">highlight_code</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-value str">'uv'</span>
+
+    <span class="ruby-identifier">text</span> = <span class="ruby-ivar">@modified_string</span>
+
+    <span class="ruby-identifier">languages_syntax_list</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">readlines</span>(
+      <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'/../config/languages_syntax_list'</span>)
+    ).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">chomp</span> }
+
+    <span class="ruby-identifier">text</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;code(\s*?lang=[&quot;']?(.*?)[&quot;']?)?&gt;(.*?)&lt;\/code&gt;/</span>) <span class="ruby-keyword kw">do</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">languages_syntax_list</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">$2</span>)
+        <span class="ruby-identifier">lang</span> = <span class="ruby-identifier">$2</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">lang</span> = <span class="ruby-value str">'ruby'</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">blank?</span>
+        <span class="ruby-constant">Uv</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">$3</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&lt;br/&gt;'</span>, <span class="ruby-value str">&quot;\n&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&amp;lt;'</span>, <span class="ruby-value str">'&lt;'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&amp;gt;'</span>, <span class="ruby-value str">'&gt;'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&amp;quot;'</span>, <span class="ruby-value str">'&quot;'</span>), <span class="ruby-value str">'xhtml'</span>, <span class="ruby-identifier">lang</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-value str">'active4d'</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-comment cmt"># TODO: split string longer than 80 characters</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt">#result = text.split(&quot;\n&quot;).map do |line|</span>
+    <span class="ruby-comment cmt">#  if line.length &gt; 80</span>
+    <span class="ruby-comment cmt">#    line.gsub(/(.{1,80})(.*?)/, &quot;\\1\n\\2&quot;)</span>
+    <span class="ruby-comment cmt">#  else</span>
+    <span class="ruby-comment cmt">#    line</span>
+    <span class="ruby-comment cmt">#  end</span>
+    <span class="ruby-comment cmt">#end</span>
+    <span class="ruby-comment cmt">#result.join(&quot;\n&quot;)</span>
+
+    <span class="ruby-ivar">@modified_string</span> = <span class="ruby-identifier">text</span>
+    <span class="ruby-keyword kw">self</span>
+
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

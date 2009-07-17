@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>urls_to_links (StringParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/string_parser.rb, line 60</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">urls_to_links</span>(<span class="ruby-identifier">options</span> = {})
+    <span class="ruby-identifier">wrap_with</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:wrap_with</span>] <span class="ruby-operator">||</span> [<span class="ruby-value str">''</span>,<span class="ruby-value str">''</span>]
+    <span class="ruby-ivar">@modified_string</span>.<span class="ruby-identifier">gsub!</span>(
+      <span class="ruby-regexp re">/(\s|^|\A|\n|\t|\r)(http:\/\/.*?)([,.])?(\s|$|\n|\Z|\t|\r)/</span>,
+      <span class="ruby-value str">'\1&lt;a href=&quot;\2&quot;&gt;\2&lt;/a&gt;\3\4'</span>
+    )
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

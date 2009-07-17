@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>html_escape (StringParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/string_parser.rb, line 33</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">html_escape</span>(<span class="ruby-identifier">options</span>={})
+    <span class="ruby-identifier">except</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:except</span>] <span class="ruby-operator">||</span> <span class="ruby-node">%w()</span>
+    <span class="ruby-identifier">close_tags</span>
+    <span class="ruby-ivar">@modified_string</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;\/?([a-zA-Z0-9]*?)(\s[^&gt;]*)?&gt;/</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">except</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">$1</span>)
+        <span class="ruby-comment cmt"># Really sanitizes attributes only here</span>
+        <span class="ruby-identifier">sanitize</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">:tags</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">except</span>, <span class="ruby-identifier">:attributes</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w(href src lang)</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">h</span>(<span class="ruby-identifier">tag</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
