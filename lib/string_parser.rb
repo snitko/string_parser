@@ -46,10 +46,11 @@ class StringParser
 
   # Creates <img> tags for all urls that look like images.
   def urls_to_images(options = {})
-    wrap_with = options[:wrap_with] || ['','']
+    wrap_with    = options[:wrap_with]    || ['','']
+    html_options = options[:html_options] || ''
     @modified_string.gsub!(
       /(\s|^|\A|\n|\t|\r)(http:\/\/.*?\.(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF))([,.])?(\s|$|\n|\Z|\t|\r)/,
-      "#{wrap_with[0]}<img src=\"\\2\" alt=\"\"/>\\5#{wrap_with[1]}"
+      "#{wrap_with[0]}<img src=\"\\2\" alt=\"\" #{html_options}/>\\5#{wrap_with[1]}"
     )
     self
   end
@@ -59,9 +60,10 @@ class StringParser
   # if you wanted all images urls to become <img> tags.
   def urls_to_links(options = {})
     wrap_with = options[:wrap_with] || ['','']
+    html_options = options[:html_options] || ''
     @modified_string.gsub!(
       /(\s|^|\A|\n|\t|\r)(http:\/\/.*?)([,.])?(\s|$|\n|\Z|\t|\r|<)/,
-      '\1<a href="\2">\2</a>\3\4'
+      '\1<a href="\2" ' + html_options + '>\2</a>\3\4'
     )
     self
   end

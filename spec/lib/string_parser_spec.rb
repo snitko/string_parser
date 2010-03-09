@@ -14,24 +14,24 @@ describe StringParser do
 
   it "makes images of urls that end with .jpg and other image extensions" do
     parser = StringParser.new('Hello, this is my photo http://image.com/image.jpg, yeah baby')
-    parser.urls_to_images(:wrap_with => ['<p>', '</p>']).string.should have_text(
-      'Hello, this is my photo<p><img src="http://image.com/image.jpg" alt=""/> </p>yeah baby')
+    parser.urls_to_images(:wrap_with => ['<p>', '</p>'], :html_options => 'class="ico"').string.should have_text(
+      'Hello, this is my photo<p><img src="http://image.com/image.jpg" alt="" class="ico"/> </p>yeah baby')
   end
 
   it "makes links of urls" do
     # example 1
     parser = StringParser.new('Hello, this is my homepage http://url.com, yeah baby')
     parser.urls_to_links.string.should have_text(
-      'Hello, this is my homepage <a href="http://url.com">http://url.com</a>, yeah baby')
+      'Hello, this is my homepage <a href="http://url.com" >http://url.com</a>, yeah baby')
     
     # example 2
     parser = StringParser.new("http://localhost:3000/\nhttp://localhost:3000/")
     parser.urls_to_links.string.should have_text(
-      "<a href=\"http://localhost:3000/\">http://localhost:3000/</a>\n<a href=\"http://localhost:3000/\">http://localhost:3000/</a>")
+      "<a href=\"http://localhost:3000/\" >http://localhost:3000/</a>\n<a href=\"http://localhost:3000/\" >http://localhost:3000/</a>")
 
     # example 3
     parser = StringParser.new('http://gyazo.com/a4c16e7a6009f40f29248ad4fed41bd3.png<br>')
-    parser.urls_to_links.string.should have_text('<a href="http://gyazo.com/a4c16e7a6009f40f29248ad4fed41bd3.png">http://gyazo.com/a4c16e7a6009f40f29248ad4fed41bd3.png</a><br>')
+    parser.urls_to_links.string.should have_text('<a href="http://gyazo.com/a4c16e7a6009f40f29248ad4fed41bd3.png" >http://gyazo.com/a4c16e7a6009f40f29248ad4fed41bd3.png</a><br>')
   end
 
   it "highlights code" do
@@ -53,10 +53,10 @@ describe StringParser do
 
   it "allows to use block notation" do
     parser = StringParser.new('http://images.com/image.jpg <b>Hello http://url.com </b>') do |p|
-      p.urls_to_images.urls_to_links
+      p.urls_to_images.urls_to_links(:html_options => 'target="_blank"')
     end
     parser.string.should have_text(
-      "<img src=\"http://images.com/image.jpg\" alt=\"\"/> <b>Hello <a href=\"http://url.com\">http://url.com</a> </b>"
+      "<img src=\"http://images.com/image.jpg\" alt=\"\" /> <b>Hello <a href=\"http://url.com\" target=\"_blank\">http://url.com</a> </b>"
     )
   end
 
