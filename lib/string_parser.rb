@@ -104,7 +104,7 @@ class StringParser
     @modified_string.gsub!(/(href="|src=")?[^\s^\n^\^^\A^\t^\r]{#{length},}/) do |s|
       unless $1
         last_pos = 0; result_string = ''
-          while string = s[last_pos..(last_pos + 75)]
+          while string = s[last_pos..(last_pos + length)]
           result_string += string + ' '
           last_pos += length
         end
