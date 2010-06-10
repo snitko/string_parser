@@ -100,11 +100,12 @@ class StringParser
   end
 
   # Breaks words that are longer than 'length'
-  def break_long_words(length=75)
+  def break_long_words(length=75, &block)
     @modified_string.gsub!(/(href="|src=")?[^\s^\n^\^^\A^\t^\r]{#{length},}/) do |s|
       unless $1
+        ns = block_given? ? yield(s) : s
         last_pos = 0; result_string = ''
-          while string = s[last_pos..(last_pos + length)]
+          while string = ns[last_pos..(last_pos + length)]
           result_string += string + ' '
           last_pos += length
         end
