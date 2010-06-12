@@ -107,7 +107,7 @@ class StringParser
         last_pos = 0; result_string = ''
           while string = ns[last_pos..(last_pos + length)]
           result_string += string + ' '
-          last_pos += length
+          last_pos += (length + 1)
         end
         result_string
       else
