@@ -46,6 +46,18 @@ describe StringParser do
     parser.break_long_words.string.should have_text("looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo oooooong ")
   end
 
+  it "handles 'a' tags when attempt to break long words" do
+    long_string = '<a href="loooooong>loooooong</a>'
+    parser = StringParser.new(long_string)
+    parser.break_long_words(5).string.should have_text('<a href="loooooong>loooo oong</a>')
+  end
+
+  it "handles 'img' tags when attempt to break long words" do
+    long_string = '<img src="image.gif" alt="looooooooooooongalt"/>'
+    parser = StringParser.new(long_string)
+    parser.break_long_words(5).string.should have_text('<img src="image.gif" alt="looooooooooooongalt"/>')
+  end
+
   it "cuts too long string and appends (if specified) characters to its end" do
     parser = StringParser.new("This is quite a long text")
     parser.cut(11, 7, :append => '...').string.should have_text("This is...")
