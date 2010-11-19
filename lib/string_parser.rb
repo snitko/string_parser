@@ -101,7 +101,7 @@ class StringParser
 
   # Breaks words that are longer than 'length'
   def break_long_words(length=75, &block)
-    @modified_string.gsub!(/<a [^>]+>|<img [^>]+>|([^\s^\n^\^^\A^\t^\r]{#{length},}?)|<\/a>/) do |s|
+    @modified_string.gsub!(/<a [^>]+>|<img [^>]+>|([^\s^\n^\^^\A^\t^\r<]{#{length},}?)|<\/a>/) do |s|
       if $1
         ns = block_given? ? yield($1) : $1
         last_pos, result_string = 0, ''
