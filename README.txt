@@ -1,3 +1,6 @@
+!IMPORTANT: this project is no longer maintained. Please see "string_master" gem instead: https://github.com/snitko/string_master 
+
+
 StringParser is a simple ruby library for the most common cases of string parsing,
 like converting all urls to links and images, escaping tags and breaking too long words.
 
